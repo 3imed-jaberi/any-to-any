@@ -1,6 +1,6 @@
 {
   "name": "any-to-any",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "convert numbers between bases ( any base to any base ) .. ",
   "main": "dist/index.js",
   "scripts": {
@@ -20,7 +20,20 @@
     "url": "git+https://github.com/3imed-jaberi/any-to-any.git"
   },
   "keywords": [
-    "convertion-between-bases-numbers"
+    "any-to-any",
+    "numbers",
+    "convert",
+    "switch",
+    "base",
+    "bases",
+    "decimal",
+    "binary",
+    "octal",
+    "hexadecimal",
+    "2..36",
+    "integer-numbers",
+    "easy",
+    "any"
   ],
   "author": "imed jaberi",
   "license": "MIT",
