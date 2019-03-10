@@ -1,0 +1,44 @@
+{
+  "name": "any-to-any",
+  "version": "1.0.0",
+  "description": "convert numbers between bases ( any base to any base ) .. ",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha --reporter spec",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "lint": "tslint --project \"./tsconfig.json\"",
+    "docs": "typedoc --out docs src",
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec",
+    "ci": "npm run lint && npm run build && npm run cover",
+    "postversion": "git push && git push --tags",
+    "prepublishOnly": "npm run ci",
+    "preversion": "npm run ci"
+  },
+"repository": {
+    "type": "git",
+    "url": "git+https://github.com/3imed-jaberi/any-to-any.git"
+  },
+  "keywords": [
+    "convertion-between-bases-numbers"
+  ],
+  "author": "imed jaberi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/3imed-jaberi/any-to-any/issues"
+  },
+  "homepage": "https://github.com/3imed-jaberi/any-to-any#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/istanbul": "^0.4.30",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.10.5",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.3",
+    "istanbul": "^0.4.5",
+    "mocha": "^6.0.2",
+    "tslint": "^5.13.1",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.3.3333"
+  }
+}
