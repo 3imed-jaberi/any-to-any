@@ -1,8 +1,2 @@
 # node modules for the dev mode ..
 node_modules
-# packge lock installation ..
-package-lock.json
-# npmignore ..
-.npmignore
-
-docs
