@@ -3,3 +3,7 @@ node_modules
 
 # coverage result of build with CI before publis ... 
 coverage
+
+# locks file .. 
+yarn.lock
+package-lock.json
