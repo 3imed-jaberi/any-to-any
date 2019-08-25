@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const chai_1 = require("chai");
 require("mocha");
+const chai_1 = require("chai");
 const index_1 = require("../index");
 describe('Standard Convert Of Positive Numbers', () => {
     it('binary to binary', () => {
