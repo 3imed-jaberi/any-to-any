@@ -1,7 +1,6 @@
-import ConvertBetweenBases_Interface from "./convert-between-bases.interface";
 
 // les nombres reels .. 
-class ConvertBetweenBases implements ConvertBetweenBases_Interface {
+class ConvertBetweenBases {
 
   private anyBaseToDecimal (InputNumber:string , InputBase:number) : number {
         let index:number ;
