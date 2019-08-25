@@ -7,10 +7,9 @@
     "test": "mocha --reporter spec",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "lint": "tslint --project \"./tsconfig.json\"",
     "docs": "typedoc --out docs src",
     "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec",
-    "ci": "npm run lint && npm run build && npm run cover",
+    "ci": "npm run build && npm run cover",
     "postversion": "git push && git push --tags",
     "prepublishOnly": "npm run ci",
     "preversion": "npm run ci"
@@ -50,7 +49,6 @@
     "coveralls": "^3.0.3",
     "istanbul": "^0.4.5",
     "mocha": "^6.0.2",
-    "tslint": "^5.13.1",
     "typedoc": "^0.14.2",
     "typescript": "^3.3.3333"
   }
