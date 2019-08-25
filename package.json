@@ -1,13 +1,13 @@
 {
   "name": "any-to-any",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "convert numbers between bases ( any base to any base ) .. ",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha --reporter spec",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js - - -R spec",
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha dist/test/*.js - - -R spec",
     "ci": "npm run build && npm run cover",
     "postversion": "git push && git push --tags",
     "prepublishOnly": "npm run ci",
@@ -48,6 +48,7 @@
     "coveralls": "^3.0.3",
     "istanbul": "^0.4.5",
     "mocha": "^6.0.2",
+    "ts-node": "^8.3.0",
     "typescript": "^3.3.3333"
   }
 }

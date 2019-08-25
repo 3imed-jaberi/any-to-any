@@ -1,6 +1,6 @@
-'use strict';
-const expect = require('chai').expect;
-const { Convert } = require('../dist/index.js');
+import 'mocha';
+import { expect } from 'chai';
+import Convert from '../index';
 
 describe('Standard Convert Of Positive Numbers', () => {
 
