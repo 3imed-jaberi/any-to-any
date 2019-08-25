@@ -1,5 +1,4 @@
-import ConvertBetweenBases_Interface from "./convert-between-bases.interface";
-declare class ConvertBetweenBases implements ConvertBetweenBases_Interface {
+declare class ConvertBetweenBases {
     private anyBaseToDecimal;
     private decimalToAnyBase;
     private validationsInput;
