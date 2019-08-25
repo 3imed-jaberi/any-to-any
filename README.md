@@ -1,6 +1,6 @@
 # ANY-TO-ANY - converts numbers between bases ; binary , decimal , octal , hexadecimal and muche more ..  
 ---
-![imed-jaberi](/lib/img/logo.jpg) 
+![imed-jaberi](logo.jpg) 
 [![Build Status](https://travis-ci.org/3imed-jaberi/any-to-any.svg?branch=master)](https://travis-ci.org/3imed-jaberi/any-to-any)
 
 [![Coverage Status](https://coveralls.io/repos/github/3imed-jaberi/any-to-any/badge.svg?branch=master)](https://coveralls.io/github/3imed-jaberi/any-to-any?branch=master)
