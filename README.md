@@ -12,9 +12,15 @@
 
 ## Installation 
 ---
+
 - NPM :
 ```bash
 $ npm install any-to-any
+```
+
+- YARN :
+```bash
+$ yarn add any-to-any
 ```
 
 
@@ -77,4 +83,3 @@ This module can convert the integers numbers between base 2 & base 36 and soon i
 #### License
 ---
 [MIT](https://choosealicense.com/licenses/mit/) 
-
