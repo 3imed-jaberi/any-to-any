@@ -1,45 +1,43 @@
 import anyBaseToDecimal from './anyBaseToDecimal';
 import decimalToAnyBase from './decimalToAnyBase';
-import validationsInput from './validation';
+import isValidInput from './validation';
 
 
 
 const main = ( InputNumber: string|number, InputBase: number, OutputBase: number ): string  => {
 
-  if (typeof InputNumber === "string"){
-    InputNumber = InputNumber.toString().toUpperCase();
+  if (typeof InputNumber === 'string'){
+    InputNumber = `${InputNumber}`.toUpperCase();
   }
-  
-  let isValid: string | boolean = validationsInput(InputNumber.toString(),InputBase,OutputBase);
 
+
+  let isValid: string | boolean = isValidInput(`${InputNumber}`, InputBase, OutputBase);
   if (typeof isValid == 'string'){
     return isValid ;
   }
 
-  if ( InputNumber.toString().length === 2 &&  InputNumber.toString().charAt(0) === "-" && InputNumber.toString().charAt(1) === "0" ){
-    return "0" ;
+  if (`${InputNumber}`.length === 2 &&  `${InputNumber}`.charAt(0) === '-' && `${InputNumber}`.charAt(1) === '0'){
+    return '0' ;
   }else{
     if ( InputBase === OutputBase ) {
-      return InputNumber.toString() ;
+      return `${InputNumber}`;
     }else{
-      let signe:string = "-" ;
+      let signe: string = '-';
+      InputNumber = `${InputNumber}`; 
 
-      InputNumber = (typeof InputNumber === "number" ) ? InputNumber.toString() : InputNumber ;   
-      if ( InputNumber.charAt(0) === "-" ) {
+      if (InputNumber.charAt(0) === signe) {
         InputNumber = InputNumber.substr(1, InputNumber.length) ;
       }else{
-        signe = "" ;
+        signe = '' ;
       };
 
-      if ( InputBase === 10 ) {
-        InputNumber = (typeof InputNumber === "string") ? parseInt(InputNumber) : InputNumber ;
-        return signe+decimalToAnyBase(InputNumber,OutputBase);
+      if (InputBase === 10) {
+        return `${signe}${decimalToAnyBase(+InputNumber, OutputBase)}`;
       }else{
         if ( OutputBase === 10 ) {                                
-            return signe+anyBaseToDecimal(InputNumber.toString(),InputBase).toString();
+            return `${signe}${anyBaseToDecimal(`${InputNumber}`, InputBase)}`;
         }else {
-          InputNumber = (typeof InputNumber === "string") ? anyBaseToDecimal(InputNumber,InputBase): anyBaseToDecimal(InputNumber,InputBase) ;
-          return signe+decimalToAnyBase( InputNumber , OutputBase) ;            
+          return `${signe}${decimalToAnyBase(anyBaseToDecimal(`${InputNumber}`, InputBase), OutputBase)}`;         
         };
       };
     };    

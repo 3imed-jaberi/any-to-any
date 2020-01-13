@@ -9,7 +9,7 @@ import {
 
 
 
-const validationsInput = (InputNumber: string, InputBase: number, OutputBase: number): string|boolean => {
+const isValidInput = (InputNumber: string, InputBase: number, OutputBase: number): string|boolean => {
 
   if (InputNumber.charAt(0) === '-'){
     InputNumber = InputNumber.slice(1);
@@ -50,4 +50,4 @@ const validationsInput = (InputNumber: string, InputBase: number, OutputBase: nu
 };
 
 
-export { validationsInput as default };
+export { isValidInput as default };
