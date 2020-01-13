@@ -10,8 +10,7 @@ const anyBaseToDecimal = (InputNumber: string, InputBase: number): number => {
     unitConverted = ( +currentNumber >= 0 &&  +currentNumber <= 9 ) ? +currentNumber :  (currentNumber.charCodeAt(0) - 55);
 
     result += unitConverted * power;
-    power *= InputBase;   
-
+    power *= InputBase;
   }
 
   return result;

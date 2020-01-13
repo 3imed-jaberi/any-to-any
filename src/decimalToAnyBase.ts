@@ -12,7 +12,7 @@ const decimalToAnyBase = (InputNumber: number, OutputBase: number): string => {
   }
   while (InputNumber !== 0);
 
-  return result ;    
+  return result;
 };
 
 
