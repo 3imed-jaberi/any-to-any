@@ -1,2 +1,2 @@
-declare function Convert(InputNumber: string | number, InputBase: number, OutputBase: number): string;
-export default Convert;
+import Convert from './src';
+export { Convert, Convert as default };
