@@ -10,10 +10,10 @@ const main = ( InputNumber: string|number, InputBase: number, OutputBase: number
     InputNumber = InputNumber.toString().toUpperCase();
   }
   
-  let isValid:string = validationsInput(InputNumber.toString(),InputBase,OutputBase);
+  let isValid: string | boolean = validationsInput(InputNumber.toString(),InputBase,OutputBase);
 
-  if ( isValid !== "true" ){
-          return isValid ;
+  if (typeof isValid == 'string'){
+    return isValid ;
   }
 
   if ( InputNumber.toString().length === 2 &&  InputNumber.toString().charAt(0) === "-" && InputNumber.toString().charAt(1) === "0" ){
