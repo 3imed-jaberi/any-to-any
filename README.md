@@ -7,8 +7,6 @@
 
 ##### The purpose of this module is to convert numbers from any base to other base you want ..
 
-###### **`NOTE:`** you can send to me for add anything you want in [instgram](https://www.instagram.com/3imed_jaberi/) ..
-
 
 ## Installation 
 ---
@@ -82,4 +80,4 @@ This module can convert the integers numbers between base 2 & base 36 and soon i
 
 #### License
 ---
-[MIT](https://choosealicense.com/licenses/mit/) 
+[MIT](https://choosealicense.com/licenses/mit/)
