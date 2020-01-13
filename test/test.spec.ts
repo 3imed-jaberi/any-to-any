@@ -1,6 +1,16 @@
 import 'mocha';
 import { expect } from 'chai';
 import Convert from '../index';
+import { 
+  __Error_InputBase__,
+  __Error_OutputBase__,
+  __Error_InputNumber_Size__, 
+  __Error_InputNumber_Int__, 
+  __Error_InputNumber_Less_Than_InputBase__, 
+  __Error_InputNumber_Not_Special_Charts__ 
+} from '../src/constants';
+
+
 
 describe('Standard Convert Of Positive Numbers', () => {
 
@@ -126,27 +136,27 @@ describe('Standard Convert Of Negative Numbers', () => {
 describe('Standard Errors', () => {
 
   it('Error : Input Base Invalid', () => {
-    expect(Convert("111",1,10)).to.equal("Error InputBase : the input base should be between 2 et 36 ..");
+    expect(() => Convert("111",1,10)).to.throw(new Error(__Error_InputBase__).message);
   });
 
   it('Error : Output Base Invalid', () => {
-    expect(Convert("111",2,100)).to.equal("Error OutputBase : the output base should be between 2 et 36 ..");
+    expect(() => Convert("111",2,100)).to.throw(new Error(__Error_OutputBase__).message);
   });
 
   it('Error : Input Number Invalid - Empty', () => {
-    expect(Convert("",2,10)).to.equal("Error InputNumber : the input number should be not empty string ..");
+    expect(() => Convert("",2,10)).to.throw(new Error(__Error_InputNumber_Size__).message);
   });
 
   it('Error : Input Number Invalid - Existe point or vergule', () => {
-    expect(Convert("1.01",2,10)).to.equal("Error InputNumber : the input number should be Integer or not possesses < ',' or '.' >  .. ");
+    expect(() => Convert("1.01",2,10)).to.throw(new Error(__Error_InputNumber_Int__).message);
   });
 
   it('Error : Input Number Invalid - Existe special charts', () => {
-    expect(Convert("14*4",2,10)).to.equal("Error InputNumber : the input number should be not possesses special charts ..");
+    expect(() => Convert("14*4",2,10)).to.throw(new Error(__Error_InputNumber_Not_Special_Charts__).message);
   });
 
   it('Error : Input Number Invalid - Input not valid with Input Base', () => {
-    expect(Convert("114",2,10)).to.equal("Error InputNumber : each unit in the input number should be less than or equal the input base ..");
+    expect(() => Convert("114",2,10)).to.throw(new Error(__Error_InputNumber_Less_Than_InputBase__).message);
   });
 
 });
