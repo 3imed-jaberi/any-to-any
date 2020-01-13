@@ -1,3 +1,13 @@
+import {
+  __Error_InputBase__, 
+  __Error_OutputBase__, 
+  __Error_InputNumber_Size__, 
+  __Error_InputNumber_Int__, 
+  __Error_InputNumber_Not_Special_Charts__,
+  __Error_InputNumber_Less_Than_InputBase__
+} from '../constants';
+
+
 
 const validationsInput = (InputNumber: string, InputBase: number, OutputBase: number): string|boolean => {
 
@@ -6,18 +16,18 @@ const validationsInput = (InputNumber: string, InputBase: number, OutputBase: nu
   }
   
   if ( InputBase < 2 || InputBase > 36  ) {
-    return 'Error InputBase : the input base should be between 2 et 36 ..';       
+    return __Error_InputBase__ ;       
   }else if ( OutputBase < 2 || OutputBase > 36 ) {
-    return 'Error OutputBase : the output base should be between 2 et 36 ..';
+    return __Error_OutputBase__;
   }else if ( typeof InputNumber === 'string' ){
     if (InputNumber.length === 0){
-      return 'Error InputNumber : the input number should be not empty string ..';        
+      return __Error_InputNumber_Size__;        
     }else{
       let NumbersInInput = InputNumber.match(/[0-9]/g) ;
       let AlphabetsInInput = InputNumber.match(/[A-z]/g) ;
       let pointOrVerguleInInput = InputNumber.match(/(\.|\,)/g); 
       if (pointOrVerguleInInput !== null ) {
-        return 'Error InputNumber : the input number should be Integer or not possesses < \',\' or \'.\' >  .. '; 
+        return __Error_InputNumber_Int__; 
       }else if (
         ( NumbersInInput === null && AlphabetsInInput !== null && AlphabetsInInput.length !== InputNumber.length )
                                                         ||
@@ -25,11 +35,11 @@ const validationsInput = (InputNumber: string, InputBase: number, OutputBase: nu
                                                         ||
         ( NumbersInInput !== null && AlphabetsInInput !== null && (AlphabetsInInput.length + NumbersInInput.length) !== InputNumber.length )
       ){
-        return 'Error InputNumber : the input number should be not possesses special charts ..';        
+        return __Error_InputNumber_Not_Special_Charts__;
       }else{
         for (let index = 0; index < InputNumber.length; index++) {
           if ( +InputNumber[index] >= InputBase ) {
-            return 'Error InputNumber : each unit in the input number should be less than or equal the input base ..';        
+            return __Error_InputNumber_Less_Than_InputBase__;        
           }                                 
         };
       };    
