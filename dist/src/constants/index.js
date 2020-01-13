@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const __Error_InputBase__ = 'Error InputBase : the input base should be between 2 et 36 ..';
+exports.__Error_InputBase__ = __Error_InputBase__;
+const __Error_OutputBase__ = 'Error OutputBase : the output base should be between 2 et 36 ..';
+exports.__Error_OutputBase__ = __Error_OutputBase__;
+const __Error_InputNumber_Size__ = 'Error InputNumber : the input number should be not empty string ..';
+exports.__Error_InputNumber_Size__ = __Error_InputNumber_Size__;
+const __Error_InputNumber_Int__ = 'Error InputNumber : the input number should be Integer or not possesses < \',\' or \'.\' >  .. ';
+exports.__Error_InputNumber_Int__ = __Error_InputNumber_Int__;
+const __Error_InputNumber_Not_Special_Charts__ = 'Error InputNumber : the input number should be not possesses special charts ..';
+exports.__Error_InputNumber_Not_Special_Charts__ = __Error_InputNumber_Not_Special_Charts__;
+const __Error_InputNumber_Less_Than_InputBase__ = 'Error InputNumber : each unit in the input number should be less than or equal the input base ..';
+exports.__Error_InputNumber_Less_Than_InputBase__ = __Error_InputNumber_Less_Than_InputBase__;

@@ -4,14 +4,10 @@ const decimalToAnyBase = (InputNumber, OutputBase) => {
     let result = '', unitConverted, unitExtracted;
     do {
         unitExtracted = InputNumber % OutputBase;
-        unitConverted = (unitExtracted >= 0 && unitExtracted <= 9)
-            ?
-                unitExtracted.toString()
-            :
-                String.fromCharCode(unitExtracted + 55);
+        unitConverted = (unitExtracted >= 0 && unitExtracted <= 9) ? `${unitExtracted}` : String.fromCharCode(unitExtracted + 55);
         result = unitConverted + result;
-        InputNumber = parseInt((InputNumber / OutputBase).toString());
+        InputNumber = parseInt(`${InputNumber / OutputBase}`);
     } while (InputNumber !== 0);
     return result;
 };
-exports.default = decimalToAnyBase;
+exports.decimalToAnyBase = decimalToAnyBase;

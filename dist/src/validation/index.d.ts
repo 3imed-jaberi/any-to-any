@@ -1,2 +1,2 @@
-declare const validationsInput: (InputNumber: string, InputBase: number, OutputBase: number) => string;
-export { validationsInput as default };
+declare const isValidInput: (InputNumber: string, InputBase: number, OutputBase: number) => string | boolean;
+export { isValidInput };

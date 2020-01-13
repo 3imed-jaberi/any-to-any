@@ -1,2 +1,2 @@
-declare const main: (InputNumber: string | number, InputBase: number, OutputBase: number) => string;
-export { main as default };
+declare const Convert: (InputNumber: string | number, InputBase: number, OutputBase: number) => string;
+export { Convert as default };
