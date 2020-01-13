@@ -1,10 +1,9 @@
-import anyBaseToDecimal from './anyBaseToDecimal';
-import decimalToAnyBase from './decimalToAnyBase';
-import isValidInput from './validation';
+import { anyBaseToDecimal , decimalToAnyBase } from './conversion';
+import { isValidInput } from './validation';
 
 
 
-const main = ( InputNumber: string|number, InputBase: number, OutputBase: number ): string  => {
+const Convert = ( InputNumber: string|number, InputBase: number, OutputBase: number ): string  => {
 
   if (typeof InputNumber === 'string'){
     InputNumber = `${InputNumber}`.toUpperCase();
@@ -45,4 +44,4 @@ const main = ( InputNumber: string|number, InputBase: number, OutputBase: number
 };
 
 
-export { main as default };
+export { Convert as default };
