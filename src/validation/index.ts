@@ -16,18 +16,18 @@ const isValidInput = (InputNumber: string, InputBase: number, OutputBase: number
   }
   
   if ( InputBase < 2 || InputBase > 36  ) {
-    return __Error_InputBase__ ;       
+    throw new Error(__Error_InputBase__).message;       
   }else if ( OutputBase < 2 || OutputBase > 36 ) {
-    return __Error_OutputBase__;
+    throw new Error(__Error_OutputBase__).message;
   }else if ( typeof InputNumber === 'string' ){
     if (InputNumber.length === 0){
-      return __Error_InputNumber_Size__;        
+      throw new Error(__Error_InputNumber_Size__).message;        
     }else{
       let NumbersInInput = InputNumber.match(/[0-9]/g) ;
       let AlphabetsInInput = InputNumber.match(/[A-z]/g) ;
       let pointOrVerguleInInput = InputNumber.match(/(\.|\,)/g); 
       if (pointOrVerguleInInput !== null ) {
-        return __Error_InputNumber_Int__; 
+        throw new Error(__Error_InputNumber_Int__).message; 
       }else if (
         ( NumbersInInput === null && AlphabetsInInput !== null && AlphabetsInInput.length !== InputNumber.length )
                                                         ||
@@ -35,11 +35,11 @@ const isValidInput = (InputNumber: string, InputBase: number, OutputBase: number
                                                         ||
         ( NumbersInInput !== null && AlphabetsInInput !== null && (AlphabetsInInput.length + NumbersInInput.length) !== InputNumber.length )
       ){
-        return __Error_InputNumber_Not_Special_Charts__;
+        throw new Error(__Error_InputNumber_Not_Special_Charts__).message;
       }else{
         for (let index = 0; index < InputNumber.length; index++) {
           if ( +InputNumber[index] >= InputBase ) {
-            return __Error_InputNumber_Less_Than_InputBase__;        
+            throw new Error(__Error_InputNumber_Less_Than_InputBase__).message;        
           }                                 
         };
       };    
@@ -50,4 +50,4 @@ const isValidInput = (InputNumber: string, InputBase: number, OutputBase: number
 };
 
 
-export { isValidInput as default };
+export { isValidInput };
