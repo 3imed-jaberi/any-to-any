@@ -1,6 +1,6 @@
 {
   "name": "any-to-any",
-  "version": "2.0.0",
+  "version": "2.0.0-rc",
   "description": " convert numbers between bases ( any base to any base ) 🔀 .. ",
   "main": "dist/index.js",
   "scripts": {
