@@ -80,4 +80,4 @@ This module can convert the integers numbers between base 2 & base 36 and soon i
 
 #### License
 ---
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](/LICENSE)
