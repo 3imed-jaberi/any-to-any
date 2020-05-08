@@ -1,47 +1,29 @@
 import { anyBaseToDecimal , decimalToAnyBase } from './conversion';
 import { isValidInput } from './validation';
 
+function Convert (InputNumber: string | number, InputBase: number, OutputBase: number): string {
+  InputNumber = `${InputNumber}`.toUpperCase();
+  isValidInput(InputNumber, InputBase, OutputBase);
 
+  return (
+    InputBase === OutputBase ? InputNumber : (
+      (() => {
+        let signe = InputNumber.charAt(0) === '-' ? '-' : '';
+        InputNumber = signe.length !== 0 ? InputNumber.substr(1, InputNumber.length): InputNumber;
 
-const Convert = ( InputNumber: string|number, InputBase: number, OutputBase: number ): string  => {
-
-  if (typeof InputNumber === 'string'){
-    InputNumber = `${InputNumber}`.toUpperCase();
-  }
-
-
-  let isValid: string | boolean = isValidInput(`${InputNumber}`, InputBase, OutputBase);
-  if (typeof isValid == 'string'){
-    return isValid ;
-  }
-
-  if (`${InputNumber}`.length === 2 &&  `${InputNumber}`.charAt(0) === '-' && `${InputNumber}`.charAt(1) === '0'){
-    return '0' ;
-  }else{
-    if ( InputBase === OutputBase ) {
-      return `${InputNumber}`;
-    }else{
-      let signe: string = '-';
-      InputNumber = `${InputNumber}`; 
-
-      if (InputNumber.charAt(0) === signe) {
-        InputNumber = InputNumber.substr(1, InputNumber.length) ;
-      }else{
-        signe = '' ;
-      };
-
-      if (InputBase === 10) {
-        return `${signe}${decimalToAnyBase(+InputNumber, OutputBase)}`;
-      }else{
-        if ( OutputBase === 10 ) {                                
-            return `${signe}${anyBaseToDecimal(`${InputNumber}`, InputBase)}`;
-        }else {
-          return `${signe}${decimalToAnyBase(anyBaseToDecimal(`${InputNumber}`, InputBase), OutputBase)}`;         
-        };
-      };
-    };    
-  };
+        return InputBase === 10 ? `${signe}${decimalToAnyBase(parseInt(InputNumber, 10), OutputBase)}` : (
+          OutputBase === 10 ? 
+            `${signe}${anyBaseToDecimal(`${InputNumber}`, InputBase)}` :
+            `${signe}${decimalToAnyBase(anyBaseToDecimal(`${InputNumber}`, InputBase), OutputBase)}`
+        )
+      })()
+    )
+  );
 };
 
+export { Convert, Convert as default};
 
-export { Convert as default };
+// For CommonJS default export support 
+module.exports = Convert;
+module.exports.Convert = Convert;
+module.exports.default = Convert;
