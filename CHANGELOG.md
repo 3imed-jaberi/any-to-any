@@ -2,6 +2,7 @@
 
 ### 2.1.0 (08 Mai 2020)
   - update travis-ci pipeline (support nodejs 8+).
+  - improve the code (better & fast code).
   - replace istanbul by nyc.
   - use mocharc.json file over script.
   - add CHANGELOG.md.
@@ -13,7 +14,6 @@
   - create more scripts for nano automation during the build and ci.
   - use `**ternary operator**` over if-else.
   - reduce the bundle size.
-  - better & fast code.
   - add bundle size checking.
   - make the test cover `100%`.
   - remove the build dir from the repo.
