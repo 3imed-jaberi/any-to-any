@@ -12,7 +12,7 @@
   - make the TS typings in the root of the repo.
   - update all the devDeps.
   - create more scripts for nano automation during the build and ci.
-  - use `**ternary operator**` over if-else.
+  - use `ternary operator` over if-else.
   - reduce the bundle size.
   - add bundle size checking.
   - make the test cover `100%`.
