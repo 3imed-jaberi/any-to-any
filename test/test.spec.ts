@@ -1,19 +1,9 @@
 import 'mocha';
 import { expect } from 'chai';
-import Convert from '../index';
-import { 
-  __Error_InputBase__,
-  __Error_OutputBase__,
-  __Error_InputNumber_Size__, 
-  __Error_InputNumber_Int__, 
-  __Error_InputNumber_Less_Than_InputBase__, 
-  __Error_InputNumber_Not_Special_Charts__ 
-} from '../src/constants';
-
-
+import Convert from '../src';
+import { __Error_InputBase__, __Error_OutputBase__, __Error_InputNumber_Size__, __Error_InputNumber_Int__, __Error_InputNumber_Less_Than_InputBase__, __Error_InputNumber_Not_Special_Charts__ } from '../src/constants';
 
 describe('Standard Convert Of Positive Numbers', () => {
-
   it('binary to binary', () => {
     expect(Convert('1110', 2, 2)).to.equal('1110');
   });
@@ -78,10 +68,12 @@ describe('Standard Convert Of Positive Numbers', () => {
     expect(Convert('150A', 16, 16)).to.equal('150A');
   });
 
+  it('pure hexadecimal to decimal', () => {
+    expect(Convert('AA', 16, 10)).to.equal('170');
+  });
 });
 
 describe('Standard Convert Of Negative Numbers', () => {
-
   it('binary to binary', () => {
     expect(Convert('-1110', 2, 2)).to.equal('-1110');
   });
@@ -145,12 +137,9 @@ describe('Standard Convert Of Negative Numbers', () => {
   it('hexadecimal to hexadecimal', () => {
     expect(Convert('-150A', 16, 16)).to.equal('-150A');
   });
-
 });
 
-
 describe('Standard Errors', () => {
-
   it('Error : Input Base Invalid', () => {
     expect(() => Convert('111', 1, 10)).to.throw(new Error(__Error_InputBase__).message);
   });
@@ -174,5 +163,4 @@ describe('Standard Errors', () => {
   it('Error : Input Number Invalid - Input not valid with Input Base', () => {
     expect(() => Convert('114', 2, 10)).to.throw(new Error(__Error_InputNumber_Less_Than_InputBase__).message);
   });
-
 });
