@@ -14,6 +14,7 @@
     "precoverage": "rimraf coverage .nyc_output",
     "coverage": "nyc npm run test",
     "ci": "npm run coverage",
+    "postci": "npm run size",
     "postversion": "git push && git push --tags",
     "prepublishOnly": "npm run ci",
     "preversion": "npm run ci"
