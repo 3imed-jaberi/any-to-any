@@ -1,7 +1,7 @@
 {
   "name": "any-to-any",
-  "version": "2.1.0",
-  "description": " convert numbers between bases ( any base to any base ) 🔀 .. ",
+  "version": "2.1.1",
+  "description": "Convert numbers between bases (any base to any base) 🔀",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
