@@ -39,6 +39,12 @@
 The purpose of this module is to convert numbers from any base to other base you want ..
 
 
+## `Limitation`
+
+This module can convert only the integers numbers between base 2 & base 36.
+**Soon, it will be possible to convert real numbers <small>[wip]</small>**
+
+
 ## `Installation`
 
 ```bash
@@ -54,42 +60,29 @@ $ yarn add any-to-any
 This is a practical example of how to use.
 
 ```javascript
-// const Convert = require ('any-to-any');
-const { Convert } = require ('any-to-any');
+// const Convert = require('any-to-any')
+const { Convert } = require('any-to-any')
 
-let InputNumber  = '1110111'; // 119 in decimal
-let InputBase = 2;
-let OutputBase = 8;
+const InputNumber  = '1110111' // 119 in decimal
+const InputBase = 2
+const OutputBase = 8
 
-let result = Convert (InputNumber, InputBase, OutputBase);
-console.log(`*****\n ${result} \n*****`);
-
-// $your_pc_name_with_your_directory
-// *****
+const result = Convert (InputNumber, InputBase, OutputBase)
+console.log(result)
 //  167
-// *****
 
 // NOTE: in case the input number is consists of numbers only,
 // you can enter the number to the function in number type ..
-let InputNumber  = 1110111; // 119 in decimal
-let InputBase = 2 ;
-let OutputBase = 8 ;
-let result = Convert ( InputNumber , InputBase , OutputBase  ); 
-console.log(`*****\n ${result} \n*****`);
-
-// $your_pc_name_with_your_directory
-// *****
+const InputNumber  = 1110111 // 119 in decimal
+const InputBase = 2
+const OutputBase = 8
+const result = Convert (InputNumber, InputBase, OutputBase); 
+console.log(result);
 //  167
-// *****
+
 ```
 
 > **NOTE:** There are a set of suggested examples that have been tested that you can follow [here](https://github.com/3imed-jaberi/any-to-any/blob/master/test/test.spec.ts).
-
-
-## `Some Informations`
-
-Switching between bases numbers is becoming easier with this module .. 
-This module can convert the integers numbers between base 2 & base 36 and soon it will be possible to convert real numbers ...
 
 
 #### `License`
