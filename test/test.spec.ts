@@ -152,6 +152,10 @@ describe('Standard Errors', () => {
     expect(() => Convert('', 2, 10)).to.throw(new Error(__Error_InputNumber_Size__).message);
   });
 
+  it('Error : Input Number Invalid - `-`', () => {
+    expect(() => Convert('-', 2, 10)).to.throw(new Error(__Error_InputNumber_Size__).message);
+  });
+
   it('Error : Input Number Invalid - Existe point or vergule', () => {
     expect(() => Convert('1.01', 2, 10)).to.throw(new Error(__Error_InputNumber_Int__).message);
   });
