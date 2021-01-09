@@ -63,23 +63,22 @@ This is a practical example of how to use.
 // const Convert = require('any-to-any')
 const { Convert } = require('any-to-any')
 
-const InputNumber  = '1110111' // 119 in decimal
-const InputBase = 2
-const OutputBase = 8
+const inputNumber  = '1110111' // 119 in decimal
+const inputBase = 2
+const outputBase = 8
 
-const result = Convert (InputNumber, InputBase, OutputBase)
+const result = Convert(inputNumber, inputBase, outputBase)
 console.log(result)
 //  167
 
 // NOTE: in case the input number is consists of numbers only,
 // you can enter the number to the function in number type ..
-const InputNumber  = 1110111 // 119 in decimal
-const InputBase = 2
-const OutputBase = 8
-const result = Convert (InputNumber, InputBase, OutputBase); 
+const inputNumber  = 1110111 // 119 in decimal
+const inputBase = 2
+const outputBase = 8
+const result = Convert(inputNumber, inputBase, outputBase); 
 console.log(result);
 //  167
-
 ```
 
 > **NOTE:** There are a set of suggested examples that have been tested that you can follow [here](https://github.com/3imed-jaberi/any-to-any/blob/master/test/test.spec.ts).
