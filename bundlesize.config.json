@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "./dist/**/*.*",
-      "maxSize": "550 kB"
+      "maxSize": "530 B"
     }
   ]
 }
