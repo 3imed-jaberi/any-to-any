@@ -1,27 +1,56 @@
+/*!
+ * any-to-any
+ *
+ * Copyright(c) 2019-2021 Imed Jaberi
+ * MIT Licensed
+ */
+
 import { anyBaseToDecimal , decimalToAnyBase } from './conversion';
-import { isValidInput } from './validation';
+import { useValidation } from './validation';
 
-function Convert (InputNumber: string | number, InputBase: number, OutputBase: number): string {
-  InputNumber = `${InputNumber}`.toUpperCase();
-  isValidInput(InputNumber, InputBase, OutputBase);
+function Convert (
+  inputNumber: string|number,
+  inputBase: number,
+  outputBase: number
+) {
+  // force inputNumber to be uppercase string
+  inputNumber = `${inputNumber}`.toUpperCase();
 
-  return (
-    InputBase === OutputBase ? InputNumber : (
-      (() => {
-        let signe = InputNumber.charAt(0) === '-' ? '-' : '';
-        InputNumber = signe.length !== 0 ? InputNumber.substr(1, InputNumber.length): InputNumber;
+  // init current sign
+  let sign = '';
 
-        return InputBase === 10 ? `${signe}${decimalToAnyBase(parseInt(InputNumber, 10), OutputBase)}` : (
-          OutputBase === 10 ? 
-            `${signe}${anyBaseToDecimal(`${InputNumber}`, InputBase)}` :
-            `${signe}${decimalToAnyBase(anyBaseToDecimal(`${InputNumber}`, InputBase), OutputBase)}`
-        )
-      })()
-    )
+  // remove the 1st char if exist the '-' sign
+  // and update the current sign
+  if (inputNumber.charAt(0) === '-') {
+    sign = '-';
+    inputNumber = inputNumber.slice(1);
+  }
+
+  // apply all validation rules
+  const [isValid, msgError] = useValidation(
+    inputNumber,
+    inputBase,
+    outputBase
   );
+
+  if (!isValid) {
+    throw new Error(msgError)
+  }
+
+  return sign + (
+    inputBase === outputBase
+      ? inputNumber
+      : decimalToAnyBase(
+          anyBaseToDecimal(inputNumber, inputBase),
+          outputBase
+        )
+  )
 };
 
-export { Convert, Convert as default};
+export {
+  Convert,
+  Convert as default
+};
 
 // For CommonJS default export support 
 module.exports = Convert;

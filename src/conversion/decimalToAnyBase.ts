@@ -1,5 +1,5 @@
-export function decimalToAnyBase (InputNumber: number, OutputBase: number): string { 
-  let result: string = '', unitConverted: string, unitExtracted: number; 
+export function decimalToAnyBase (InputNumber: number, OutputBase: number) { 
+  let result = '', unitConverted, unitExtracted; 
   
   while (InputNumber !== 0) {
     unitExtracted = InputNumber % OutputBase;
