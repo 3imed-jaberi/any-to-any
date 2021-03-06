@@ -1,20 +1,21 @@
 {
   "name": "any-to-any",
-  "version": "3.0.0",
-  "description": "Convert numbers between bases (any base to any base) 🔀",
+  "version": "4.0.0",
+  "description": "convert numbers between bases (any base to any base) 🔀 ..",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "size": "bundlesize --config bundlesize.config.json",
-    "pretest": "npm run build",
-    "test": "mocha test/**/*.spec.ts",
-    "prebuild": "rimraf index.d.ts dist",
+    "lint": "eslint . --ext .ts",
+    "pretest": "rimraf index.d.ts dist",
+    "test": "mocha index.spec.ts",
     "build": "tsc -d",
-    "postbuild": "cp dist/index.d.ts . ",
     "precoverage": "rimraf coverage .nyc_output",
     "coverage": "nyc npm run test",
+    "postcoverage": "npm run build",
+    "preci": "npm run lint",
     "ci": "npm run coverage",
-    "postci": "npm run size",
+    "postci": "cp dist/index.d.ts index.d.ts",
     "postversion": "git push && git push --tags",
     "prepublishOnly": "npm run ci",
     "preversion": "npm run ci"
@@ -46,19 +47,21 @@
     "url": "https://www.3imed-jaberi.com"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.11",
-    "@types/mocha": "^7.0.2",
-    "@types/node": "^13.13.5",
-    "bundlesize": "^0.18.0",
-    "chai": "^4.2.0",
-    "mocha": "^7.1.2",
-    "nyc": "^15.0.1",
+    "@types/chai": "^4.2.15",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.25",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "chai": "^4.3.0",
+    "eslint": "^7.19.0",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "ts-node": "^8.10.1",
-    "typescript": "^3.8.3"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.4"
   },
   "engines": {
-    "node": ">= 8"
+    "node": ">= 12"
   },
   "bugs": {
     "url": "https://github.com/3imed-jaberi/any-to-any/issues"
