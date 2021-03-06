@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "rootDir": "./src",
+    "rootDir": ".",
     "target": "es2015",
     "strict": true,
     "strictNullChecks": true,
@@ -11,6 +11,6 @@
   },
   "exclude": [
     "node_modules",
-    "test/**/*.ts"
+    "index.spec.ts"
   ]
 }
