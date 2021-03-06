@@ -36,13 +36,13 @@
 [pr-url]: https://github.com/3imed-jaberi/any-to-any/blob/master/CONTRIBUTING.md
 
 
-The purpose of this module is to convert numbers from any base to other base you want ..
+The purpose of this module is to convert numbers from any base to other base you want.
 
 
 ## `Limitation`
 
 This module can convert only the integers numbers between base 2 & base 36.
-**Soon, it will be possible to convert real numbers <small>[wip]</small>**
+**Soon, it will be possible to convert real numbers <small>[wip]</small>.**
 
 
 ## `Installation`
@@ -81,10 +81,10 @@ console.log(result);
 //  167
 ```
 
-> **NOTE:** There are a set of suggested examples that have been tested that you can follow [here](https://github.com/3imed-jaberi/any-to-any/blob/master/test/test.spec.ts).
+> **NOTE:** There are a set of suggested examples that have been tested that you can follow [here](https://github.com/3imed-jaberi/any-to-any/blob/master/index.spec.ts).
 
 
 #### `License`
 ---
 
-[MIT](LICENSE)
+[MIT](LICENSE) &copy;	[Imed Jaberi](https://github.com/3imed-jaberi)
