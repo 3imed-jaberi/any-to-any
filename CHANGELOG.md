@@ -1,5 +1,13 @@
 # CHANGE LOG
 
+### 4.0.0 (06 Mar 2021)
+  - update travis-ci pipeline (support nodejs 12 --> 15).
+  - refactor + improve the perfermonce.
+  - update LICENSE.
+  - update README.md.
+  - make the test cover `100%`.
+  - reduce files + bundle.
+
 ### 3.0.0 (09 Jan 2021)
   - update travis-ci pipeline (support nodejs 8 --> 15).
   - improve the perfermonce (better logic, clean and fast code)..
