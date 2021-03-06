@@ -3,6 +3,9 @@
   "extension": [
     ".ts"
   ],
+  "exclude": [
+    "dist"
+  ],
   "reporter": [
     "text-lcov",
     "text",
