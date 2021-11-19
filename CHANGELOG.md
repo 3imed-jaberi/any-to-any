@@ -6,12 +6,6 @@
 - fix result when pass 0.
 - improve the perfermonce by ealy return when we pass already number with base 10.
 
-### 4.1.0 (19 Nov 2021)
-
-- update travis-ci pipeline (support nodejs 12 --> 16).
-- fix result when pass 0.
-- improve the perfermonce by ealy return when we pass already number with base 10.
-
 ### 4.0.0 (06 Mar 2021)
 
 - update travis-ci pipeline (support nodejs 12 --> 15).
