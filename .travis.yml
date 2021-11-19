@@ -4,6 +4,7 @@ node_js:
   - 13
   - 14
   - 15
+  - 16
 script:
   - npm run ci
 after_script:
