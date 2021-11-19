@@ -31,6 +31,10 @@ function decimalToAnyBase (iNumber: number, oBase: number): string {
  * @api public
  */
 function anyBaseToDecimal (iNumber: string, iBase: number): number {
+  // we don't need to make any convertion when we pass iBase with 10 value
+  if (iBase === 10) return +iNumber
+
+  // otherwise, convert to base 10
   let index = iNumber.length - 1, result = 0, power = 1, unitConverted
 
   for (index; index >= 0; index--) {
@@ -78,6 +82,9 @@ function convert (iNumber: string|number, iBase: number, oBase: number): number|
   if (oBase < 2 || oBase > 36) {
     throw new Error ('The output base should be between 2 et 36.')
   }
+
+  // early return when we pass 0 (0 always equal 0) - with out sign -
+  if (iNumber === '0') return iNumber
 
   return sign + (
     iBase === oBase
