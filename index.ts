@@ -1,9 +1,11 @@
 /*!
  * any-to-any
  *
- * Copyright(c) 2019-2021 Imed Jaberi
+ * Copyright(c) 2019-2022 Imed Jaberi
  * MIT Licensed
  */
+
+import 'colors';
 
 /**
  * Convert from base 10 to any base.
@@ -40,7 +42,7 @@ function anyBaseToDecimal (iNumber: string, iBase: number): number {
   for (index; index >= 0; index--) {
     unitConverted = (+iNumber[index] >= 0 &&  +iNumber[index] <= 9)
       ? +iNumber[index]
-      : (iNumber[index].charCodeAt(0) - 55)
+      : (iNumber[index].charCodeAt(0) - 55)      
     result += unitConverted * power
     power *= iBase
   }
@@ -49,11 +51,38 @@ function anyBaseToDecimal (iNumber: string, iBase: number): number {
 }
 
 /**
+ * Utility to check passed number is on the range or not.
+ * 
+ * @api private
+ */
+const isInRange = (iNumber: string, iBase: number) => ((+iNumber - 0) * (+iNumber - (iBase - 1)) <= 0)
+
+/**
+ * Utility to invoke the convert process.
+ * 
+ * @api private
+ */
+function convertEngine(iNumber: string, iBase: number, oBase: number): string {
+  // early return when we pass 0 (0 always equal 0) - with out sign -
+  if (iNumber === '0') return iNumber
+  // https://github.com/SeanCannon/aybabtu#32-bit-limitation
+  if (iNumber.length > 32)
+    return (iNumber.match(/.{1,32}/g) as string[])
+      .map(chunk => convertEngine(chunk, iBase, oBase))
+      .join('')
+  return (
+    iBase === oBase
+      ? iNumber
+      : decimalToAnyBase(anyBaseToDecimal(iNumber, iBase), oBase)
+  )
+}
+
+/**
  * Convert from any base to any base.
  * 
  * @api public
  */
-function convert (iNumber: string|number, iBase: number, oBase: number): number|string {
+function convert (iNumber: string|number, iBase: number, oBase: number): any {
   // force iNumber to be uppercase string
   iNumber = `${iNumber}`.toUpperCase()
 
@@ -69,31 +98,34 @@ function convert (iNumber: string|number, iBase: number, oBase: number): number|
 
   // validator.
   // check if exist some special charts.
-  if(iNumber.match(/[0-9A-Z]/g)?.length !== iNumber.length) {
+  if(iNumber.match(/[0-9A-Z]/g)?.length !== iNumber.length)
     throw new Error('The input number should be not have special charts or empty.')
-  }
 
   // check the input base.
-  if (iBase < 2 || iBase > 36) {
+  if (iBase < 2 || iBase > 36)
     throw new Error('The input base should be between 2 et 36.')
-  }
 
   // check the outbut base.
-  if (oBase < 2 || oBase > 36) {
+  if (oBase < 2 || oBase > 36)
     throw new Error ('The output base should be between 2 et 36.')
+
+  // TODO: work around this.
+  if (iBase > 10) {
+    console.warn(`
+      Please, be careful and ensure that you pass valid input number which respect the range of the passed bases.
+      The module isn't checking the range for input bases greater than 10. soony, will do!
+    `.red)
+  } else {
+    const normalizediNumber = iNumber.split('').filter((number) => isInRange(number, iBase)).join('')
+    if (iNumber !== normalizediNumber)
+      throw new Error (`The input number '${iNumber}' isn't on the range [0, ${iBase - 1}].`)
   }
 
-  // early return when we pass 0 (0 always equal 0) - with out sign -
-  if (iNumber === '0') return iNumber
-
-  return sign + (
-    iBase === oBase
-      ? iNumber
-      : decimalToAnyBase(anyBaseToDecimal(iNumber, iBase), oBase)
-  )
+  return sign + convertEngine(iNumber, iBase, oBase)
 }
 
 /**
  * Expose.
  */
 export { anyBaseToDecimal, decimalToAnyBase, convert, convert as default }
+// 26.372
