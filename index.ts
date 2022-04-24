@@ -26,8 +26,8 @@ function getUnitToConvertIt(number: string, fromDecimal?: boolean) {
   return +number >= 0 && +number <= 9
     ? +number
     : !fromDecimal
-    ? number.charCodeAt(0) - 55
-    : String.fromCharCode(+number + 55)
+      ? number.charCodeAt(0) - 55
+      : String.fromCharCode(+number + 55)
 }
 
 /**
