@@ -74,6 +74,14 @@ Also, we have 2 exported methods to convert a value from any base to Decimal (ba
 
 > **NOTE:** There are a set of suggested examples that have been tested that you can follow [here](https://github.com/3imed-jaberi/any-to-any/blob/master/index.spec.ts).
 
+### `Note about the new experimental convert`:
+
+We export a new experimental method `experimentalConvert` maybe to solve problem of large numbers between hexa and decimal and up to 64 base.
+
+You can use it with careful until we release the next major release (v5.0.0).
+
+> Please, if you find any problem or you have suggestion to improve the experiance with this module feel free to open an issue.
+
 #### `License`
 
 ---
