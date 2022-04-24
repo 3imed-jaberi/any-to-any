@@ -1,5 +1,9 @@
 # CHANGE LOG
 
+### 4.2.1 (24 Apr 2022)
+
+- fix publish config.
+
 ### 4.2.0 (24 Apr 2022)
 
 - update travis-ci pipeline (support nodejs 12 --> 18).
