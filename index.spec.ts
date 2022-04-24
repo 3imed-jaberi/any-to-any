@@ -1,173 +1,124 @@
 import 'mocha'
 import { expect } from 'chai'
-import { convert } from '.'
+import { convert, anyBaseToDecimal, decimalToAnyBase } from '.'
 
-describe('Standard Convert Of Positive Numbers', () => {
-  it('should return 0 not empty string', () => {
+type TestCasesKey = 'binary'|'octal'|'decimal'|'hexadecimal' 
+type TestCasesValue = [string|number, number, number, string][]
+const basesTestCases: Record<TestCasesKey,TestCasesValue> = {
+  binary: [
+    // positive
+    ['1110', 2, 2, '1110'],
+    ['1110', 2, 8, '16'],
+    ['1110', 2, 10, '14'],
+    ['1110', 2, 16, 'E'],
+    // negative
+    ['-1110', 2, 2, '-1110'],
+    ['-1110', 2, 8, '-16'],
+    ['-1110', 2, 10, '-14'],
+    ['-1110', 2, 16, '-E']
+  ],
+  octal: [
+    // positive
+    ['120', 8, 2, '1010000'],
+    ['120', 8, 8, '120'],
+    ['120', 8, 10, '80'],
+    ['120', 8, 16, '50'],
+    // negative
+    ['-120', 8, 2, '-1010000'],
+    ['-120', 8, 8, '-120'],
+    ['-120', 8, 10, '-80'],
+    ['-120', 8, 16, '-50']
+  ],
+  decimal: [
+    // positive
+    [2019, 10, 2, '11111100011'],
+    [2019, 10, 8, '3743'],
+    [2019, 10, 10, '2019'],
+    [2019, 10, 16, '7E3'],
+    // negative
+    [-2019, 10, 2, '-11111100011'],
+    [-2019, 10, 8, '-3743'],
+    [-2019, 10, 10, '-2019'],
+    [-2019, 10, 16, '-7E3']
+  ],
+  hexadecimal: [
+    // positive
+    ['150A', 16, 2, '1010100001010'],
+    ['150A', 16, 8, '12412'],
+    ['150A', 16, 10, '5386'],
+    ['150A', 16, 16, '150A'],
+    // ['AA', 16, 10, '170'],
+    // negative
+    ['-150A', 16, 2, '-1010100001010'],
+    ['-150A', 16, 8, '-12412'],
+    ['-150A', 16, 10, '-5386'],
+    ['-150A', 16, 16, '-150A']
+  ]
+}
+
+describe('any-to-any', () => {
+  it('should export convert correcty', () => {
+    expect(convert).to.not.be.undefined
+  })
+
+  it('should export anyBaseToDecimal correcty', () => {
+    expect(anyBaseToDecimal).to.not.be.undefined
+  })
+
+  it('should export decimalToAnyBase correcty', () => {
+    expect(decimalToAnyBase).to.not.be.undefined
+  })
+
+  it('should early exist and return 0 over empty string when pass 0 as input number', () => {
     expect(convert('0', 10, 36)).to.equal('0')
   })
 
-  it('binary to binary', () => {
-    expect(convert('1110', 2, 2)).to.equal('1110')
-  })
-
-  it('binary to octal', () => {
-    expect(convert('1110', 2, 8)).to.equal('16')
-  })
-
-  it('binary to decimal', () => {
-    expect(convert('1110', 2, 10)).to.equal('14')
-  })
-
-  it('decimal to hexadecimal', () => {
-    expect(convert('1110', 2, 16)).to.equal('E')
-  })
-
-  it('octal to binary', () => {
-    expect(convert('120', 8, 2)).to.equal('1010000')
-  })
-
-  it('octal to octal', () => {
-    expect(convert('120', 8, 8)).to.equal('120')
-  })
-
-  it('octal to decimal', () => {
-    expect(convert('120', 8, 10)).to.equal('80')
-  })
-
-  it('octal to hexadecimal', () => {
-    expect(convert('120', 8, 16)).to.equal('50')
-  })
-
-  it('decimal to binary', () => {
-    expect(convert(2019, 10, 2)).to.equal('11111100011')
-  })
-
-  it('decimal to octal', () => {
-    expect(convert(2019, 10, 8)).to.equal('3743')
-  })
-
-  it('decimal to decimal', () => {
-    expect(convert(2019, 10, 10)).to.equal('2019')
-  })
-
-  it('decimal to hexadecimal', () => {
-    expect(convert(2019, 10, 16)).to.equal('7E3')
-  })
-
-  it('hexadecimal to binary', () => {
-    expect(convert('150A', 16, 2)).to.equal('1010100001010')
-  })
-
-  it('hexadecimal to octal', () => {
-    expect(convert('150A', 16, 8)).to.equal('12412')
-  })
-
-  it('hexadecimal to decimal', () => {
-    expect(convert('150A', 16, 10)).to.equal('5386')
-  })
-
-  it('hexadecimal to hexadecimal', () => {
-    expect(convert('150A', 16, 16)).to.equal('150A')
-  })
-
-  it('pure hexadecimal to decimal', () => {
-    expect(convert('AA', 16, 10)).to.equal('170')
-  })
-})
-
-describe('Standard Convert Of Negative Numbers', () => {
-  it('should return 0 not empty string', () => {
+  it('should early exist and return 0 over empty string when pass 0 with - symbol as input number', () => {
     expect(convert('-0', 10, 36)).to.equal('0')
   })
 
-  it('binary to binary', () => {
-    expect(convert('-1110', 2, 2)).to.equal('-1110')
+  Object
+    .keys(basesTestCases)
+    .forEach(base =>
+      describe(base, () =>
+        basesTestCases[base as TestCasesKey]
+          .forEach(([iNumber, iBase, oBase, result]) =>
+            it(`should convert ${base} to ${oBase} (${iNumber.toString().startsWith('-') ? '-' : '+'}) correctly`, () =>
+              expect(convert(iNumber, iBase, oBase)).to.equal(result)
+            )
+          )
+      )
+    )
+
+  it('should handle large input value correctly (length > 32)', () => {
+    expect(convert('11111011000001010011100101111001010001110011100011011010', 2, 16))
+      .to.equal('FB0539794738DA')
   })
 
-  it('binary to octal', () => {
-    expect(convert('-1110', 2, 8)).to.equal('-16')
-  })
-
-  it('binary to decimal', () => {
-    expect(convert('-1110', 2, 10)).to.equal('-14')
-  })
-
-  it('decimal to hexadecimal', () => {
-    expect(convert('-1110', 2, 16)).to.equal('-E')
-  })
-
-  it('octal to binary', () => {
-    expect(convert('-120', 8, 2)).to.equal('-1010000')
-  })
-
-  it('octal to octal', () => {
-    expect(convert('-120', 8, 8)).to.equal('-120')
-  })
-
-  it('octal to decimal', () => {
-    expect(convert('-120', 8, 10)).to.equal('-80')
-  })
-
-  it('octal to hexadecimal', () => {
-    expect(convert('-120', 8, 16)).to.equal('-50')
-  })
-
-  it('decimal to binary', () => {
-    expect(convert(-2019, 10, 2)).to.equal('-11111100011')
-  })
-
-  it('decimal to octal', () => {
-    expect(convert(-2019, 10, 8)).to.equal('-3743')
-  })
-
-  it('decimal to decimal', () => {
-    expect(convert(-2019, 10, 10)).to.equal('-2019')
-  })
-
-  it('decimal to hexadecimal', () => {
-    expect(convert(-2019, 10, 16)).to.equal('-7E3')
-  })
-
-  it('hexadecimal to binary', () => {
-    expect(convert('-150A', 16, 2)).to.equal('-1010100001010')
-  })
-
-  it('hexadecimal to octal', () => {
-    expect(convert('-150A', 16, 8)).to.equal('-12412')
-  })
-
-  it('hexadecimal to decimal', () => {
-    expect(convert('-150A', 16, 10)).to.equal('-5386')
-  })
-
-  it('hexadecimal to hexadecimal', () => {
-    expect(convert('-150A', 16, 16)).to.equal('-150A')
-  })
-})
-
-describe('Standard Errors', () => {
-  it('input base invalid', () => {
-    expect(() => convert('111', 1, 10))
-      .to
-      .throw(/The input base should be between 2 et 36./)
-  })
-
-  it('output base invalid', () => {
-    expect(() => convert('111', 2, 100))
-      .to
-      .throw(/The output base should be between 2 et 36./)
-  })
-
-  it('input number invalid ~ empty', () => {
-    expect(() => convert('', 2, 10))
-      .to
-      .throw(/The input number should be not have special charts or empty./)
-  })
-
-  it('input number invalid ~ existe special charts', () => {
-    expect(() => convert('14*4', 2, 10))
-    .to
-    .throw(/The input number should be not have special charts or empty./)
+  describe('errors', () => {
+    it('should throw when pass invalid input base', () => {
+      expect(() => convert('111', 1, 10))
+        .to.throw(/The input base should be between 2 et 36./)
+    })
+  
+    it('should throw when pass invalid output base', () => {
+      expect(() => convert('111', 2, 100))
+        .to.throw(/The output base should be between 2 et 36./)
+    })
+  
+    it('should throw when pass an empty input number', () => {
+      expect(() => convert('', 2, 10))
+        .to.throw(/The input number should be not have special charts or empty./)
+    })
+  
+    it('should throw when pass an input number have special charts', () => {
+      expect(() => convert('14*4', 2, 10))
+        .to.throw(/The input number should be not have special charts or empty./)
+    })
+  
+    it('should throw when pass an input number out of range', () => {
+      expect(() => convert('23942394234', 2, 16))
+        .to.throw(`The input number '23942394234' isn't on the range [0, 1].`)
+    })
   })
 })
