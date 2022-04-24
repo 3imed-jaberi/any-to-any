@@ -1,5 +1,13 @@
 # CHANGE LOG
 
+### 4.2.0 (24 Apr 2022)
+
+- update travis-ci pipeline (support nodejs 12 --> 18).
+- fix too Large Binary bug #19.
+- check the input value #20.
+- fix hexadecimal to decimal #21.
+- add new experimental convert api.
+
 ### 4.1.0 (19 Nov 2021)
 
 - update travis-ci pipeline (support nodejs 12 --> 16).
