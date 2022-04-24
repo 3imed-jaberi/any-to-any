@@ -1,6 +1,7 @@
 import 'mocha'
 import { expect } from 'chai'
-import { convert, anyBaseToDecimal, decimalToAnyBase } from '.'
+
+import { convert, anyBaseToDecimal, decimalToAnyBase, experimentalConvert } from '.'
 
 type TestCasesKey = 'binary'|'octal'|'decimal'|'hexadecimal' 
 type TestCasesValue = [string|number, number, number, string][]
@@ -69,6 +70,10 @@ describe('any-to-any', () => {
     expect(decimalToAnyBase).to.not.be.undefined
   })
 
+  it('should export experimentalConvert correcty', () => {
+    expect(experimentalConvert).to.not.be.undefined
+  })
+  
   it('should early exist and return 0 over empty string when pass 0 as input number', () => {
     expect(convert('0', 10, 36)).to.equal('0')
   })
@@ -82,7 +87,7 @@ describe('any-to-any', () => {
     .forEach(base =>
       describe(base, () =>
         basesTestCases[base as TestCasesKey]
-          .forEach(([iNumber, iBase, oBase, result]) =>
+          .forEach(([iNumber, iBase, oBase, result]) => 
             it(`should convert ${base} to ${oBase} (${iNumber.toString().startsWith('-') ? '-' : '+'}) correctly`, () =>
               expect(convert(iNumber, iBase, oBase)).to.equal(result)
             )
@@ -90,11 +95,11 @@ describe('any-to-any', () => {
       )
     )
 
-  it('should handle large input value correctly (length > 32)', () => {
+  it('should handle large input value correctly for all input bases under 10 (length > 32)', () => {
     expect(convert('11111011000001010011100101111001010001110011100011011010', 2, 16))
       .to.equal('FB0539794738DA')
   })
-
+  
   describe('errors', () => {
     it('should throw when pass invalid input base', () => {
       expect(() => convert('111', 1, 10))
