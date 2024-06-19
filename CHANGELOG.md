@@ -1,5 +1,18 @@
 # CHANGE LOG
 
+### 5.0.0 (19 Jun 2024)
+
+- upgrade TypeScript to v5
+- remove colors dependency
+- migrate eslint from v7 to v9
+- drop support for all node.js versions lower than 20
+- update travis-ci pipline to support node.js 20+
+- remove the new experimental convert api
+- replace the ts compiler with tsup bundler
+- replace mocha and chai with native node.js test runner module and assert module
+- replace nyc for coverage with c8
+- exports cjs and esm formats
+
 ### 4.2.1 (24 Apr 2022)
 
 - fix publish config.

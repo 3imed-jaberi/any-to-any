@@ -1,51 +1,85 @@
 /*!
  * any-to-any
  *
- * Copyright(c) 2019-2022 Imed Jaberi
+ * Copyright(c) 2019-2024 Imed Jaberi
+ *
+ * NOTE: BigInt resolve the limitation of 32bit with number.
+ * https://github.com/SeanCannon/aybabtu#32-bit-limitation
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#binary_bitwise_operators
+ *
  * MIT Licensed
  */
 
-import 'colors'
-
 /**
- * TODO: remove experimentalNextConvert when we fix the problem when convert large hexa number to decimal.
+ * Validator store, where we re-use the validation logics.
  *
- * INFO:
- *  convert('aa309be366a5cdd63103b657465f6f9617fbaee', 16, 10)
- *  should equal '60725777912152566396085878260777866453342730990'
- *  but return '60725777912152552488440220822060464062280464800'.
+ * @api private
  */
-import { experimentalConvert } from './experimental-convert.js'
-
-/**
- * Utility to extract the unit to convert it.
- *
- * @api public
- */
-function getUnitToConvertIt(number: string, fromDecimal?: boolean) {
-  return +number >= 0 && +number <= 9
-    ? +number
-    : !fromDecimal
-      ? number.charCodeAt(0) - 55
-      : String.fromCharCode(+number + 55)
-}
+const validators = {
+  checkSpecialCharts(inputNumber: string) {
+    if (inputNumber.match(/[0-9A-Za-z-]/g)?.length !== inputNumber.length)
+      throw new TypeError(
+        "The input shouldn't have special charts or be empty."
+      );
+  },
+  checkInputNumberRange(inputNumber: string, inputBase: number) {
+    // create digits and letters separately
+    const digits = Array.from({ length: 10 }, (_, i) => i);
+    const letters = Array.from({ length: 26 }, (_, i) =>
+      String.fromCharCode(65 + i)
+    );
+    // concatenate digits and letters
+    const baseSymbolsRef = [...digits, ...letters].join("");
+    const iBaseSymbolsRef = baseSymbolsRef.substring(0, inputBase);
+    const positiveInputNumber = inputNumber.startsWith("-")
+      ? inputNumber.slice(1)
+      : inputNumber;
+    const hasOutOfRangeError = !positiveInputNumber
+      .split("")
+      .every((symbol) => iBaseSymbolsRef.includes(symbol));
+    if (hasOutOfRangeError)
+      throw new RangeError(
+        `The input number '${inputNumber}' isn't on the range [0, ${
+          inputBase - 1
+        }].`
+      );
+  },
+  checkBaseRange(base: number) {
+    if (base < 2 || base > 36)
+      throw new RangeError("The base should be between 2 et 36.");
+  },
+};
 
 /**
  * Convert from base 10 to any base.
  *
  * @api public
  */
-function decimalToAnyBase(iNumber: number, oBase: number): string {
-  let result = ''
+export function fromDecimalBaseToAnyBase(
+  iNumberAsStr: string,
+  oBase: number
+): string {
+  validators.checkSpecialCharts(iNumberAsStr.toString());
+  validators.checkBaseRange(oBase);
+  if (["0", "-0"].includes(iNumberAsStr)) return "0";
 
-  while (iNumber > 0) {
-    result =
-      String(getUnitToConvertIt(String((iNumber % oBase).toFixed()), true)) +
-      result
-    iNumber = Math.floor(iNumber / oBase)
+  let iNumber = BigInt(iNumberAsStr);
+  const isNegative = iNumber < 0;
+  iNumber = isNegative ? -iNumber : iNumber;
+  const safeOutputBase = BigInt(oBase);
+
+  let result = "";
+  while (iNumber > 0n) {
+    const remainder = iNumber % safeOutputBase;
+    // If remainder is 10 or higher, convert it to corresponding letter
+    const ascii = remainder + (remainder < 10n ? 48n : 55n);
+    const char = String.fromCharCode(Number(ascii));
+    result = char.concat(result);
+    iNumber = iNumber / safeOutputBase;
   }
 
-  return result
+  const resultPrefix = isNegative ? "-" : "";
+  return resultPrefix.concat(result);
 }
 
 /**
@@ -53,117 +87,65 @@ function decimalToAnyBase(iNumber: number, oBase: number): string {
  *
  * @api public
  */
-function anyBaseToDecimal(iNumber: string, iBase: number): number {
-  // we don't need to make any convertion when we pass iBase with 10 value
-  if (iBase === 10) return +iNumber
+export function fromAnyBaseToDecimalBase(
+  iNumber: string,
+  iBase: number
+): string {
+  validators.checkSpecialCharts(iNumber);
+  validators.checkBaseRange(iBase);
+  validators.checkInputNumberRange(iNumber, iBase);
+  if (["0", "-0"].includes(iNumber)) return "0";
 
-  return iNumber
-    .split('')
-    .reduce(
-      (prevResult, currentItem, index) =>
-        prevResult +
-        +getUnitToConvertIt(currentItem) *
-          Math.pow(iBase, iNumber.length - 1 - index),
-      0
-    )
+  const isNegative = iNumber.startsWith("-");
+  iNumber = isNegative ? iNumber.slice(1) : iNumber;
+
+  const digits = Array.from(iNumber)
+    .reverse()
+    .map((char: string) => {
+      const charCode = char.charCodeAt(0);
+      if (charCode >= 48 && charCode <= 57) {
+        return charCode - 48; // '0'-'9'
+      } else if (charCode >= 65 && charCode <= 90) {
+        return charCode - 55; // 'A'-'Z'
+      } else if (charCode >= 97 && charCode <= 122) {
+        return charCode - 87; // 'a'-'z'
+      } else {
+        throw new Error("Invalid character in the input string.");
+      }
+    });
+
+  if (digits.some((digit) => digit >= iBase)) {
+    throw new Error(`Invalid digit found for base ${iBase}`);
+  }
+
+  const decimalValuePrefix = isNegative ? "-" : "";
+
+  const decimalValue = digits.reduce(
+    (result, currentDigit, index) =>
+      result + BigInt(currentDigit) * BigInt(iBase) ** BigInt(index),
+    BigInt(0)
+  );
+
+  return decimalValuePrefix.concat(decimalValue.toString());
 }
 
-/**
- * Utility to check passed number is on the range or not.
- *
- * @api private
- */
-function isInRange(iNumber: string, iBase: number) {
-  return (+iNumber - 0) * (+iNumber - (iBase - 1)) <= 0
-}
-
-/**
- * Utility to invoke the convert process.
- *
- * @api private
- */
-function convertEngine(iNumber: string, iBase: number, oBase: number): string {
-  // https://github.com/SeanCannon/aybabtu#32-bit-limitation
-  if (iNumber.length > 32 && iBase < 10)
-    return (iNumber.match(/.{1,32}/g) as string[])
-      .map((chunk) => convertEngine(chunk, iBase, oBase))
-      .join('')
-
-  return iBase === oBase
-    ? iNumber
-    : decimalToAnyBase(anyBaseToDecimal(iNumber, iBase), oBase)
-}
-
-/**
- * Convert from any base to any base.
- *
- * @api public
- */
-function convert(
+export function convert(
   iNumber: string | number,
   iBase: number,
   oBase: number
 ): string {
-  // force iNumber to be uppercase string
-  iNumber = `${iNumber}`.toUpperCase()
+  const inputNumberAsStr = iNumber.toString();
+  validators.checkSpecialCharts(inputNumberAsStr);
+  validators.checkBaseRange(iBase);
+  validators.checkBaseRange(oBase);
+  validators.checkInputNumberRange(inputNumberAsStr, iBase);
+  if (["0", "-0"].includes(inputNumberAsStr)) return "0";
 
-  // init current sign
-  let sign = ''
-
-  // remove the 1st char if exist the '-' sign
-  // and update the current sign
-  if (iNumber.charAt(0) === '-') {
-    sign = '-'
-    iNumber = iNumber.slice(1)
-  }
-
-  // validator.
-  // check if exist some special charts.
-  if (iNumber.match(/[0-9A-Z]/g)?.length !== iNumber.length)
-    throw new Error(
-      'The input number should be not have special charts or empty.'
-    )
-
-  // check the input base.
-  if (iBase < 2 || iBase > 36)
-    throw new Error('The input base should be between 2 et 36.')
-
-  // check the outbut base.
-  if (oBase < 2 || oBase > 36)
-    throw new Error('The output base should be between 2 et 36.')
-
-  // TODO: work around this in the near future.
-  if (iBase > 10) {
-    console.warn(
-      `
-      Please, be careful and ensure that you pass valid input number which respect the range of the passed bases.
-      The module isn't checking the range for input bases greater than 10. soony, will do!
-    `.red
-    )
-  } else {
-    const normalizediNumber = iNumber
-      .split('')
-      .filter((number) => isInRange(number, iBase))
-      .join('')
-    if (iNumber !== normalizediNumber)
-      throw new Error(
-        `The input number '${iNumber}' isn't on the range [0, ${iBase - 1}].`
-      )
-  }
-
-  // early return when we pass 0 (0 always equal 0) - with out sign -
-  if (iNumber === '0') return iNumber
-
-  return sign + convertEngine(iNumber, iBase, oBase)
-}
-
-/**
- * Expose.
- */
-export {
-  anyBaseToDecimal,
-  decimalToAnyBase,
-  convert,
-  experimentalConvert,
-  convert as default,
+  if (iBase === 10) return fromDecimalBaseToAnyBase(inputNumberAsStr, oBase);
+  if (oBase === 10) return fromAnyBaseToDecimalBase(inputNumberAsStr, iBase);
+  if (iBase === oBase) return inputNumberAsStr;
+  return fromDecimalBaseToAnyBase(
+    fromAnyBaseToDecimalBase(inputNumberAsStr, iBase),
+    oBase
+  );
 }

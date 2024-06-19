@@ -1,9 +1,0 @@
-{
-  "extension": [
-    "ts"
-  ],
-  "require": "ts-node/register",
-  "reporter": "spec",
-  "timeout": 1000,
-  "watch-files": ["test/**/*.ts"]
-}

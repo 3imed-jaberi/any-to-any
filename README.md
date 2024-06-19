@@ -1,4 +1,4 @@
-# ANY-TO-ANY - converts numbers between bases ; binary , decimal , octal , hexadecimal and muche more ..
+# ANY-TO-ANY - converts numbers between bases ; binary , decimal , octal , hexadecimal and muche more ...
 
 ---
 
@@ -30,17 +30,24 @@
 
 The purpose of this module is to convert numbers from any base to other base you want.
 
+> This module support both CommonJS and ES Modules.
+
 ## `Limitation`
 
-This module can convert only the integers numbers between base 2 & base 36.
-**Soon, it will be possible to convert real numbers <small>[wip]</small>.**
+- Support only bases between 2 and 36.
+- Support only integer numbers.
+
+## `Next Feature(s)`
+
+- Support float numbers.
+- Add a chainable api (`convert().from().to()` | `convert().from().to().get()`).
 
 ## `Installation`
 
 ```bash
-# npm ..
+# npm
 $ npm install any-to-any
-# yarn ..
+# yarn
 $ yarn add any-to-any
 ```
 
@@ -58,27 +65,44 @@ const outputBase = 8;
 
 const result = convert(inputNumber, inputBase, outputBase);
 console.log(result);
-//  167
-
-// NOTE: in case the input number is consists of numbers only,
-// you can enter the number to the function in number type ..
-const inputNumber = 1110111; // 119 in decimal
-const inputBase = 2;
-const outputBase = 8;
-const result = convert(inputNumber, inputBase, outputBase);
-console.log(result);
-//  167
+//  "167"
 ```
 
-Also, we have 2 exported methods to convert a value from any base to Decimal (base 10) called `anyBaseToDecimal` and the reverse one from Decimal to any base named `decimalToAnyBase`.
+Also, we have 2 exported methods to convert a value from any base to Decimal (base 10) called `fromAnyBaseToDecimalBase` and the reverse one from Decimal to any base named `fromDecimalBaseToAnyBase`.
+
+### `fromAnyBaseToDecimalBase`
+
+```javascript
+// const convert = require('any-to-any')
+const { fromAnyBaseToDecimalBase } = require("any-to-any");
+
+const inputNumber = "1110111"; // 119 in decimal
+const inputBase = 2;
+const result = fromAnyBaseToDecimalBase(inputNumber, inputBase);
+console.log(result);
+//  "119"
+```
+
+### `fromDecimalBaseToAnyBase`
+
+```javascript
+// const convert = require('any-to-any')
+const { fromDecimalBaseToAnyBase } = require("any-to-any");
+
+const inputNumber = "119";
+const outputBase = 2;
+const result = fromDecimalBaseToAnyBase(inputNumber, outputBase);
+console.log(result);
+//  "1110111"
+```
 
 > **NOTE:** There are a set of suggested examples that have been tested that you can follow [here](https://github.com/3imed-jaberi/any-to-any/blob/master/index.spec.ts).
 
-### `Note about the new experimental convert`:
+### `Note about the new experimental convert on v4.2.x`
 
-We export a new experimental method `experimentalConvert` maybe to solve problem of large numbers between hexa and decimal and up to 64 base.
-
-You can use it with careful until we release the next major release (v5.0.0).
+Since we bump to v5.x.x, we remove the new experimental method `experimentalConvert` because we
+resolved the problem related to large numbers due to the JS number limitation to handle only 32bit
+in one shot. We use [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) for that 🤫.
 
 > Please, if you find any problem or you have suggestion to improve the experiance with this module feel free to open an issue.
 
